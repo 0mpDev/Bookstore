@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Cart</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f5f7fa;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .cart-container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 30px;
+            width: 100%;
+            max-width: 960px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 2rem;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+        }
+
+        th, td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid #e1e4e8;
+        }
+
+        th {
+            background-color: #087E38;
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+
+        tr:hover {
+            background-color: #f0f4f8;
+        }
+
+        .total-row td {
+            font-weight: bold;
+            font-size: 1.1rem;
+            border-top: 2px solid #087E38;
+        }
+
+        a.button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #087E38;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background-color 0.2s ease;
+        }
+
+        a.button:hover {
+            background-color: #065c2b;
+        }
+
+        .empty-cart {
+            text-align: center;
+            font-style: italic;
+            color: #777;
+            margin-top: 20px;
+        }
+
+        a[href*='book_detail'] {
+            color: #087E38;
+            text-decoration: none;
+        }
+
+        a[href*='book_detail']:hover {
+            text-decoration: underline;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+
+            th {
+                display: none;
+            }
+
+            td {
+                position: relative;
+                padding-left: 50%;
+                text-align: right;
+                border: none;
+                border-bottom: 1px solid #eee;
+            }
+
+            td::before {
+                position: absolute;
+                left: 16px;
+                top: 16px;
+                content: attr(data-label);
+                font-weight: bold;
+                text-transform: capitalize;
+                text-align: left;
+                color: #555;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cart-container">
+        <h1>Your Shopping Cart</h1>
+        {% if cart_items %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Book</th>
+                    <th>Quantity</th>
+                    <th>Price per Unit</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                <tr>
+                    <td data-label="Book">
+                        <a href="{% url 'bookstore_app:book_detail' item.book.pk %}">
+                            {{ item.book.title }}
+                        </a>
+                    </td>
+                    <td data-label="Quantity">{{ item.quantity }}</td>
+                    <td data-label="Price">${{ item.book.price }}</td>
+                    <td data-label="Subtotal">${{ item.subtotal }}</td>
+                </tr>
+                {% endfor %}
+                <tr class="total-row">
+                    <td colspan="3">Total</td>
+                    <td>${{ total }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="button-container">
+            <a href="{% url 'bookstore_app:book_list' %}" class="button">Continue Shopping</a>
+        </div>
+        {% else %}
+        <p class="empty-cart">Your cart is empty.</p>
+        <div class="button-container">
+            <a href="{% url 'bookstore_app:book_list' %}" class="button">Browse Books</a>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Your Cart</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f5f7fa;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .cart-container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 30px;
+            width: 100%;
+            max-width: 960px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 2rem;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+        }
+
+        th, td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid #e1e4e8;
+        }
+
+        th {
+            background-color: #087E38;
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+
+        tr:hover {
+            background-color: #f0f4f8;
+        }
+
+        .total-row td {
+            font-weight: bold;
+            font-size: 1.1rem;
+            border-top: 2px solid #087E38;
+        }
+
+        a.button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #087E38;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background-color 0.2s ease;
+        }
+
+        a.button:hover {
+            background-color: #065c2b;
+        }
+
+        .empty-cart {
+            text-align: center;
+            font-style: italic;
+            color: #777;
+            margin-top: 20px;
+        }
+
+        a[href*='book_detail'] {
+            color: #087E38;
+            text-decoration: none;
+        }
+
+        a[href*='book_detail']:hover {
+            text-decoration: underline;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+
+            th {
+                display: none;
+            }
+
+            td {
+                position: relative;
+                padding-left: 50%;
+                text-align: right;
+                border: none;
+                border-bottom: 1px solid #eee;
+            }
+
+            td::before {
+                position: absolute;
+                left: 16px;
+                top: 16px;
+                content: attr(data-label);
+                font-weight: bold;
+                text-transform: capitalize;
+                text-align: left;
+                color: #555;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cart-container">
+        <h1>Your Shopping Cart</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Book</th>
+                    <th>Quantity</th>
+                    <th>Price per Unit</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td data-label="Book"><a href="#">The Alchemist</a></td>
+                    <td data-label="Quantity">2</td>
+                    <td data-label="Price">$15.99</td>
+                    <td data-label="Subtotal">$31.98</td>
+                </tr>
+                <tr>
+                    <td data-label="Book"><a href="#">Atomic Habits</a></td>
+                    <td data-label="Quantity">1</td>
+                    <td data-label="Price">$20.00</td>
+                    <td data-label="Subtotal">$20.00</td>
+                </tr>
+                <tr>
+                    <td data-label="Book"><a href="#">Clean Code</a></td>
+                    <td data-label="Quantity">1</td>
+                    <td data-label="Price">$35.50</td>
+                    <td data-label="Subtotal">$35.50</td>
+                </tr>
+                <tr class="total-row">
+                    <td colspan="3">Total</td>
+                    <td>$87.48</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="button-container">
+            <a href="#" class="button">Continue Shopping</a>
+        </div>
+    </div>
+</body>
+</html> -->

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Registration</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: url('https://images.unsplash.com/photo-1531746790731-6c087fecd65a') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .register-container {
+            backdrop-filter: blur(14px) saturate(180%);
+            -webkit-backdrop-filter: blur(14px) saturate(180%);
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 40px;
+            width: 360px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.9em;
+            letter-spacing: 1px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: rgb(0, 0, 0);
+            font-size: 1em;
+        }
+
+        input::placeholder {
+            color: #000000;
+        }
+
+        input:focus {
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(45deg, #00c6ff, #0072ff);
+            color: white;
+            font-weight: bold;
+            font-size: 1em;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        button:hover {
+            transform: scale(1.03);
+        }
+
+        .error-list {
+            color: #ffadad;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+        }
+
+        .error-list li {
+            margin-bottom: 5px;
+        }
+
+        p {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.9em;
+        }
+
+        a {
+            color: #00d4ff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h1>Create Account</h1>
+        <!-- {% if errors %}
+            <ul class="error-list">
+                {% for error in errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %} -->
+        <form method="post">
+            <!-- {% csrf_token %} -->
+            <label>Username</label>
+            <input type="text" name="username" value="" placeholder="Enter a username" required>
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Create a password" required>
+            <label>Confirm Password</label>
+            <input type="password" name="password_confirm" placeholder="Re-enter your password" required>
+            <button type="submit">Register</button>
+        </form>
+        <p>Already have an account? <a href="{% url 'bookstore_app:login' %}">Login here</a>.</p>
+    </div>
+</body>
+</html>
